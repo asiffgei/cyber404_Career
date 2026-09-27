@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>🛡️ Cyber404 Career Finder | Discover Your Cybersecurity Path</title>
+  <meta
+    name="description"
+    content="Take the Cyber404 Career Finder quiz to explore cybersecurity career paths including Blue Team, Red Team, DFIR, Application & Cloud Security, and GRC."
+  />
+  <meta name="theme-color" content="#0A0E1A" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Cyber404 Career Finder | Discover Your Cybersecurity Path" />
+  <meta
+    property="og:description"
+    content="Answer 15 quick questions and explore which cybersecurity path — Blue Team, Red Team, DFIR, Application & Cloud Security, or GRC — matches your interests."
+  />
+  <meta property="og:site_name" content="Cyber404 Academy" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Cyber404 Career Finder" />
+  <meta
+    name="twitter:description"
+    content="Discover your path in cybersecurity with a free, 15-question interest quiz."
+  />
+
+  <!-- Favicon: a small inline SVG shield, no external file required -->
+  <link
+    rel="icon"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%2335D0F0' d='M12 2l8 3.2v6c0 5.6-3.6 9.9-8 10.8-4.4-.9-8-5.2-8-10.8v-6L12 2z'/%3E%3C/svg%3E"
+  />
+
+  <!-- Google Fonts (optional enhancement — the whole site works fine on
+       the system-font fallbacks defined in style.css if this fails to
+       load, e.g. when offline). -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Relative path so this works both locally and at
+       https://USERNAME.github.io/cyber404-career-finder/ -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Purely decorative celebration effect drawn on results. Never blocks
+       clicks/taps (pointer-events: none) and stays empty/inert whenever
+       prefers-reduced-motion is on — see launchConfetti() in script.js. -->
+  <canvas id="confetti-canvas" class="confetti-canvas" aria-hidden="true"></canvas>
+
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="site-header__inner">
+      <span class="brand">
+        <span class="brand__mark">cyber404<span class="brand__cursor" aria-hidden="true">_</span></span>
+      </span>
+      <span class="brand__org">Cyber404 Academy</span>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <!-- ===================================================================
+         SCREEN 1: HOME
+         =================================================================== -->
+    <section id="screen-home" class="screen">
+      <div class="container">
+        <div class="hero">
+          <p class="hero__eyebrow">Cyber404 Career Finder</p>
+          <h1 class="hero__title">Discover Your Path in Cybersecurity</h1>
+          <p class="hero__lede">
+            Not sure whether Blue Team, Red Team, DFIR, Application &amp; Cloud Security, or
+            GRC is right for your interests? Answer 15 quick questions and explore the
+            cybersecurity paths that match your interests.
+          </p>
+
+          <ul class="hero__stats" aria-label="Quiz facts">
+            <li><span class="hero__stat-value">15</span><span class="hero__stat-label">❓ Questions</span></li>
+            <li><span class="hero__stat-value">5</span><span class="hero__stat-label">🧭 Career Tracks</span></li>
+            <li><span class="hero__stat-value">Beginner</span><span class="hero__stat-label">🌱 Friendly</span></li>
+            <li><span class="hero__stat-value">Free</span><span class="hero__stat-label">💸 Always</span></li>
+          </ul>
+
+          <div class="name-entry">
+            <label class="name-entry__label" for="user-name-input">
+              🧑‍💻 What should we call you?
+            </label>
+            <input
+              type="text"
+              id="user-name-input"
+              class="name-entry__input"
+              placeholder="e.g. Ayesha"
+              maxlength="40"
+              autocomplete="given-name"
+              aria-describedby="name-entry-error"
+            />
+            <p id="name-entry-error" class="name-entry__error" role="alert" hidden>
+              ⚠️ Please enter your name so we can personalize your results.
+            </p>
+          </div>
+
+          <button id="start-quiz-btn" class="btn btn--primary btn--large" type="button">
+            🚀 Start Career Quiz
+          </button>
+
+          <p class="hero__privacy-note">
+            No sign-up. Your answers stay in your browser and are never sent anywhere.
+          </p>
+        </div>
+
+        <div class="tracks-preview">
+          <h2 class="tracks-preview__heading">Five paths, one starting point</h2>
+          <ul id="track-preview-grid" class="track-grid">
+            <!-- Populated by script.js from CAREER_TRACKS -->
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         SCREEN 2: QUIZ
+         =================================================================== -->
+    <section id="screen-quiz" class="screen" hidden>
+      <div class="container container--narrow">
+        <h2 class="visually-hidden">Cybersecurity career quiz</h2>
+
+        <div class="quiz-progress">
+          <p id="question-counter" class="quiz-progress__counter" aria-hidden="true">Question 1 of 15</p>
+          <div
+            id="progress-bar"
+            class="progress-bar"
+            role="progressbar"
+            aria-valuemin="1"
+            aria-valuemax="15"
+            aria-valuenow="1"
+            aria-valuetext="Question 1 of 15"
+            aria-label="Quiz progress"
+          >
+            <div id="progress-fill" class="progress-bar__fill" style="width: 6.67%"></div>
+          </div>
+        </div>
+
+        <form id="quiz-form" novalidate>
+          <fieldset id="question-fieldset" class="question-card">
+            <legend id="question-legend" class="question-card__text"></legend>
+            <div id="options-container" class="options" role="radiogroup" aria-label="Answer options">
+              <!-- Populated by script.js -->
+            </div>
+          </fieldset>
+
+          <p id="validation-message" class="validation-message" role="alert" hidden></p>
+
+          <div class="quiz-nav">
+            <button id="back-btn" class="btn btn--ghost" type="button" disabled>
+              ⬅️ Back
+            </button>
+            <button id="next-btn" class="btn btn--primary" type="button">
+              Next
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         SCREEN 3: RESULTS
+         =================================================================== -->
+    <section id="screen-results" class="screen" hidden>
+      <div class="container container--narrow">
+        <h2 class="visually-hidden">Your results</h2>
+
+        <div id="results-content">
+          <!-- Populated by script.js: hero match, explanation, score chart,
+               skills, roadmap, other tracks, disclaimer -->
+        </div>
+
+        <div class="results-actions">
+          <button id="retake-btn" class="btn btn--primary" type="button">
+            🔄 Retake Quiz
+          </button>
+          <button id="download-btn" class="btn btn--ghost" type="button">
+            📥 Download My Result
+          </button>
+          <button id="share-btn" class="btn btn--ghost" type="button">
+            📤 Share My Result
+          </button>
+          <!--
+            NOTE: cyber404academy.com is a placeholder destination for the
+            "Explore Cyber404 Academy" link. Replace href below once the
+            real Cyber404 Academy site/course pages are live.
+          -->
+          <a
+            class="btn btn--ghost"
+            href="https://cyber404academy.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            🚀 Explore Cyber404 Academy
+          </a>
+        </div>
+
+        <div id="action-status" class="share-status" aria-live="polite" hidden></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p class="site-footer__tagline">🔐 Learn. Hack. Secure. Grow.</p>
+    <p class="site-footer__note">
+      Cyber404 Career Finder is a free exploration tool by Cyber404 Academy. No accounts,
+      no tracking, no data collection — everything runs in your browser.
+    </p>
+  </footer>
+
+  <!-- Relative path so this works both locally and on GitHub Pages -->
+  <script src="script.js"></script>
+</body>
+</html>
